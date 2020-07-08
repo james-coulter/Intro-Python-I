@@ -30,3 +30,72 @@ it should use today’s date to get the month and year.
 import sys
 import calendar
 from datetime import datetime
+
+
+# day = datetime.today()
+# month = int(input("Enter the month (1-12): "))
+# year = int(input("Enter the year: "))
+#
+# if month < 1 or month > 12:
+#     month = day.month
+#
+# if year < 0 or year > 9999:
+#     year = day.year
+#
+# calendar.prmonth(year, month)
+
+# Initial function was working,
+# but PyCharm wasn't allowing system arguments when running the program 😑
+# Ran in terminal = works well, but not as well as solution given during lecture
+
+day = datetime.today()
+month = day.month
+year = day.year
+
+if len(sys.argv) > 1:
+    try:
+        month = int(sys.argv[1])
+        if month < 1 or month > 12:
+            raise ValueError("invalid month")
+    except ValueError as error:
+        print("invalid format")
+        for arg in error.args:
+            print(error.args)
+        exit()
+if len(sys.argv) > 2:
+    try:
+        year = int(sys.argv[2])
+    except ValueError as error:
+        print("invalid format")
+        for arg in error.args:
+            print(error.args)
+        exit()
+
+calendar.prmonth(year, month)
+
+
+# CODE FROM LECTURE
+
+# num_args = len(sys.argv)
+#
+# if num_args == 1:
+#     month = datetime.now().month
+#     year = datetime.now().year
+#     cal = calendar.TextCalendar()
+#     cal.prmonth(year, month)
+#
+# elif num_args == 2:
+#     year = datetime.now().year
+#     month = int(sys.argv[1])
+#     cal = calendar.TextCalendar()
+#     cal.prmonth(year, month)
+#
+# elif num_args == 3:
+#     month = int(sys.argv[1])
+#     year = int(sys.argv[2])
+#     cal = calendar.TextCalendar()
+#     cal.prmonth(year, month)
+#
+# else:
+#     print("usage: 14_cal.py [month] [year]")
+#     sys.exit(1)
